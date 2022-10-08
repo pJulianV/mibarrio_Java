@@ -4,8 +4,8 @@
  */
 package com.tiendavirtual.mibarrio.Controller;
 
-import com.tiendavirtual.mibarrio.Modelo.Inventario;
-import com.tiendavirtual.mibarrio.ServiceImpl.ServiceInventarioImpl;
+import com.tiendavirtual.mibarrio.Modelo.Proveedor;
+import com.tiendavirtual.mibarrio.ServiceImpl.ServiceProveedorImpl;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,48 +26,45 @@ import org.springframework.web.server.ResponseStatusException;
  *
  * @author Usuario
  */
-
 @RestController
-@RequestMapping(value = "/inventario")
+@RequestMapping(value = "/proveedor")
 
+public class ProveedorController {
+    
+     @Autowired
+    private ServiceProveedorImpl serviceProveedor;
 
-
-public class InventarioController {
-    
-    
-    @Autowired
-    private ServiceInventarioImpl serviceInventario;
-    
     @GetMapping(value = "")
-    public ResponseEntity<List<Inventario>> ListaInventario(){
-        List<Inventario> lista = serviceInventario.getListaInventario();
+    public ResponseEntity<List<Proveedor>> ListaProveedor() {
+        List<Proveedor> lista = serviceProveedor.getListaProveedor();
         return ResponseEntity.ok(lista);
     }
-    
+
     @PostMapping(value = "")
-    public ResponseEntity<Inventario> CrearInventario(@Valid @RequestBody Inventario 
-            inventario,BindingResult result){
-        if(result.hasErrors()){
-            throw  new ResponseStatusException(HttpStatus.NOT_FOUND,result.getFieldError()
+    public ResponseEntity<Proveedor> CrearProveedor(@Valid @RequestBody Proveedor inventario, 
+            BindingResult result) {
+        if (result.hasErrors()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, result.getFieldError()
                     .getDefaultMessage());
         }
-        Inventario crear = serviceInventario.crearInventario(inventario);
+        Proveedor crear = serviceProveedor.crearProveedor(inventario);
         return ResponseEntity.ok(crear);
     }
-    
+
     @PutMapping(value = "")
-    public ResponseEntity<Inventario> ActualizarStock(@RequestBody Inventario inventario){
-        Inventario actualizar = serviceInventario.ActualizarStockInventario(inventario);
+    public ResponseEntity<Proveedor> ActualizarProveedor(@RequestBody Proveedor inventario) {
+        Proveedor actualizar = serviceProveedor.ActualizarProveedor(inventario);
         return ResponseEntity.ok(actualizar);
     }
+
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> EliminarInventario(@PathVariable("id") Long id){
-        if(id != null){
-            if( serviceInventario.EliminarInventario(id)){
-                 return ResponseEntity.ok().body("Eliminado");
+    public ResponseEntity<String> EliminarProveedor(@PathVariable("id") Long id) {
+        if (id != null) {
+            if (serviceProveedor.EliminarProveedor(id)) {
+                return ResponseEntity.ok().body("Eliminado");
             }
         }
-      
+
         return ResponseEntity.notFound().build();
     }
     

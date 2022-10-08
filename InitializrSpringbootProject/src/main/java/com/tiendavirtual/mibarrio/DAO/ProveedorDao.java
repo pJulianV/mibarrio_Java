@@ -4,13 +4,13 @@
  */
 package com.tiendavirtual.mibarrio.Dao;
 
-import com.tiendavirtual.mibarrio.Modelo.Producto;
+import com.tiendavirtual.mibarrio.Modelo.Proveedor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author Usuario
  */
-public interface ProductoDao extends JpaRepository<Producto, Long> {
+public interface ProveedorDao extends JpaRepository<Proveedor, Long>{
     
 }

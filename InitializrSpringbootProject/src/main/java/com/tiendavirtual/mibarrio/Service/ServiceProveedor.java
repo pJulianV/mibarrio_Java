@@ -4,18 +4,18 @@
  */
 package com.tiendavirtual.mibarrio.Service;
 
-import com.tiendavirtual.mibarrio.Modelo.Producto;
+import com.tiendavirtual.mibarrio.Modelo.Proveedor;
 import java.util.List;
 
 /**
  *
  * @author Usuario
  */
-public interface ServiceProducto {
+public interface ServiceProveedor {
     
-    List<Producto> getListaProducto();
-    Producto crearProducto(Producto producto);
-    Producto ActualizarProducto(Producto producto);
-    Boolean EliminarProducto(Long id);
+    List<Proveedor> getListaProveedor();
+    Proveedor crearProveedor(Proveedor proveedor);
+    Proveedor ActualizarProveedor(Proveedor proveedor);
+    Boolean EliminarProveedor(Long id);
     
 }

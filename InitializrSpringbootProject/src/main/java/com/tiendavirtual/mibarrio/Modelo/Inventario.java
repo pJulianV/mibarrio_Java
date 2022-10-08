@@ -4,7 +4,6 @@
  */
 package com.tiendavirtual.mibarrio.Modelo;
 
-//import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,40 +15,43 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "inventario") //nombre de referencia en base de datos
+
 public class Inventario {
+    //ahora crearemos los atributos 
+    @Id //le decimos que esta es la columna id de nuestra tabla
+    @GeneratedValue(strategy = GenerationType.AUTO)//llave primaria inventario , con generacion automatica
+    @Column(name = "inv_id_pk") //nombre de la columna en base de datos
+    private Long idpk; 
     
-    // ahora crearemos los atributos
-    @Id // le decimos que esta es la columna id de nuestra tabla
-    @GeneratedValue (strategy = GenerationType.AUTO) //llave inventarion, 
-                                                     // con generacion automatica
-    @Column(name = "inv_id_pk") //nombre de la colmna en base de datos
-    private Long idpk;
-    
-    @Column(name = "inv_stock",nullable = false) // le decimos que no permita valores nulos
+    @Column(name = "inv_stock",nullable = false) //le decimos que no permita valores nulos
     private int stock; // si no se utiliza nombre, se pone el nombre del atributo
     
     @Column(name = "inv_sucursal",nullable = false)
-    private int sucursal; // id sucursal que realizo el movimiento
-    
+    private int secursal; // id sucarsal que realizo el movimiento
+
+
     /**
-     * many to one  =  muchos a uno
-     * Fetch        =  carga perezosa
-     * una realacion con la tabla producto join colomn
+     * manytoOne muchos a uno
+     * Fecht carga perezosa
+     * una relacions con la tabla producto join column
      * json ignore para que no genere error al cargar la lista perezosa
-     */
-    
+     **/
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "inv_idproducto_fk")
-    @JsonIgnore
-    
-    private Producto producto;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Producto producto; // 
     
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name = "inv_idprovedor_fk")
-    @JsonIgnore
-    private Producto provedor;
+    @JoinColumn(name = "inv_idproveedor_fk")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Proveedor proveedor;
+    
+    
+    public Inventario() {
+    }
 
     public Long getIdpk() {
         return idpk;
@@ -67,12 +69,12 @@ public class Inventario {
         this.stock = stock;
     }
 
-    public int getSucursal() {
-        return sucursal;
+    public int getSecursal() {
+        return secursal;
     }
 
-    public void setSucursal(int sucursal) {
-        this.sucursal = sucursal;
+    public void setSecursal(int secursal) {
+        this.secursal = secursal;
     }
 
     public Producto getProducto() {
@@ -83,12 +85,13 @@ public class Inventario {
         this.producto = producto;
     }
 
-    public Producto getProvedor() {
-        return provedor;
+    public Proveedor getProveedor() {
+        return proveedor;
     }
 
-    public void setProvedor(Producto provedor) {
-        this.provedor = provedor;
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
-    
+  
+
 }
