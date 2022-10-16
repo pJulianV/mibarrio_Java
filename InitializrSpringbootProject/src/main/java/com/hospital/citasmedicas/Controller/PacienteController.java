@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.tiendavirtual.mibarrio.Controller;
+package com.hospital.citasmedicas.Controller;
 
-import com.tiendavirtual.mibarrio.Modelo.Inventario;
-import com.tiendavirtual.mibarrio.ServiceImpl.ServiceInventarioImpl;
+import com.hospital.citasmedicas.Modelo.Paciente;
+import com.hospital.citasmedicas.ServiceImpl.ServicePacienteImpl;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,48 +26,45 @@ import org.springframework.web.server.ResponseStatusException;
  *
  * @author Usuario
  */
-
 @RestController
-@RequestMapping(value = "/inventario")
+@RequestMapping(value = "/paciente")
 
+public class PacienteController {
+    
+     @Autowired
+    private ServicePacienteImpl servicePaciente;
 
-
-public class InventarioController {
-    
-    
-    @Autowired
-    private ServiceInventarioImpl serviceInventario;
-    
     @GetMapping(value = "")
-    public ResponseEntity<List<Inventario>> ListaInventario(){
-        List<Inventario> lista = serviceInventario.getListaInventario();
+    public ResponseEntity<List<Paciente>> ListaPaciente() {
+        List<Paciente> lista = servicePaciente.getListaPaciente();
         return ResponseEntity.ok(lista);
     }
-    
+
     @PostMapping(value = "")
-    public ResponseEntity<Inventario> CrearInventario(@Valid @RequestBody Inventario 
-            inventario,BindingResult result){
-        if(result.hasErrors()){
-            throw  new ResponseStatusException(HttpStatus.NOT_FOUND,result.getFieldError()
+    public ResponseEntity<Paciente> CrearPaciente(@Valid @RequestBody Paciente cita, 
+            BindingResult result) {
+        if (result.hasErrors()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, result.getFieldError()
                     .getDefaultMessage());
         }
-        Inventario crear = serviceInventario.crearInventario(inventario);
+        Paciente crear = servicePaciente.crearPaciente(cita);
         return ResponseEntity.ok(crear);
     }
-    
+
     @PutMapping(value = "")
-    public ResponseEntity<Inventario> ActualizarStock(@RequestBody Inventario inventario){
-        Inventario actualizar = serviceInventario.ActualizarStockInventario(inventario);
+    public ResponseEntity<Paciente> ActualizarPaciente(@RequestBody Paciente cita) {
+        Paciente actualizar = servicePaciente.ActualizarPaciente(cita);
         return ResponseEntity.ok(actualizar);
     }
+
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> EliminarInventario(@PathVariable("id") Long id){
-        if(id != null){
-            if( serviceInventario.EliminarInventario(id)){
-                 return ResponseEntity.ok().body("Eliminado");
+    public ResponseEntity<String> EliminarPaciente(@PathVariable("id") Long id) {
+        if (id != null) {
+            if (servicePaciente.EliminarPaciente(id)) {
+                return ResponseEntity.ok().body("Eliminado");
             }
         }
-      
+
         return ResponseEntity.notFound().build();
     }
     

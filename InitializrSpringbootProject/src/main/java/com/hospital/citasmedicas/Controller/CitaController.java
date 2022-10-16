@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.tiendavirtual.mibarrio.Controller;
+package com.hospital.citasmedicas.Controller;
 
-import com.tiendavirtual.mibarrio.Modelo.Proveedor;
-import com.tiendavirtual.mibarrio.ServiceImpl.ServiceProveedorImpl;
+import com.hospital.citasmedicas.Modelo.Cita;
+import com.hospital.citasmedicas.ServiceImpl.ServiceCitaImpl;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,45 +26,48 @@ import org.springframework.web.server.ResponseStatusException;
  *
  * @author Usuario
  */
+
 @RestController
-@RequestMapping(value = "/proveedor")
+@RequestMapping(value = "/cita")
 
-public class ProveedorController {
+
+
+public class CitaController {
     
-     @Autowired
-    private ServiceProveedorImpl serviceProveedor;
-
+    
+    @Autowired
+    private ServiceCitaImpl serviceCita;
+    
     @GetMapping(value = "")
-    public ResponseEntity<List<Proveedor>> ListaProveedor() {
-        List<Proveedor> lista = serviceProveedor.getListaProveedor();
+    public ResponseEntity<List<Cita>> ListaCita(){
+        List<Cita> lista = serviceCita.getListaCita();
         return ResponseEntity.ok(lista);
     }
-
+    
     @PostMapping(value = "")
-    public ResponseEntity<Proveedor> CrearProveedor(@Valid @RequestBody Proveedor inventario, 
-            BindingResult result) {
-        if (result.hasErrors()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, result.getFieldError()
+    public ResponseEntity<Cita> CrearCita(@Valid @RequestBody Cita 
+            cita,BindingResult result){
+        if(result.hasErrors()){
+            throw  new ResponseStatusException(HttpStatus.NOT_FOUND,result.getFieldError()
                     .getDefaultMessage());
         }
-        Proveedor crear = serviceProveedor.crearProveedor(inventario);
+        Cita crear = serviceCita.crearCita(cita);
         return ResponseEntity.ok(crear);
     }
-
+    
     @PutMapping(value = "")
-    public ResponseEntity<Proveedor> ActualizarProveedor(@RequestBody Proveedor inventario) {
-        Proveedor actualizar = serviceProveedor.ActualizarProveedor(inventario);
+    public ResponseEntity<Cita> Actualizar(@RequestBody Cita cita){
+        Cita actualizar = serviceCita.ActualizarCita(cita);
         return ResponseEntity.ok(actualizar);
     }
-
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> EliminarProveedor(@PathVariable("id") Long id) {
-        if (id != null) {
-            if (serviceProveedor.EliminarProveedor(id)) {
-                return ResponseEntity.ok().body("Eliminado");
+    public ResponseEntity<String> EliminarCita(@PathVariable("id") Long id){
+        if(id != null){
+            if( serviceCita.EliminarCita(id)){
+                 return ResponseEntity.ok().body("Eliminado");
             }
         }
-
+      
         return ResponseEntity.notFound().build();
     }
     

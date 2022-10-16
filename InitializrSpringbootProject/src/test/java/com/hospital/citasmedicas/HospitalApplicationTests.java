@@ -1,10 +1,10 @@
-package com.tiendavirtual.mibarrio;
+package com.hospital.citasmedicas;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MibarrioApplicationTests {
+class HospitalApplicationTests {
 
 	@Test
 	void contextLoads() {

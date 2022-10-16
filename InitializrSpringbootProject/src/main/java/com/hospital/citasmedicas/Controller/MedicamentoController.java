@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.tiendavirtual.mibarrio.Controller;
+package com.hospital.citasmedicas.Controller;
 
-import com.tiendavirtual.mibarrio.Modelo.Producto;
-import com.tiendavirtual.mibarrio.ServiceImpl.ServiceProductoImpl;
+import com.hospital.citasmedicas.Modelo.Medicamento;
+import com.hospital.citasmedicas.ServiceImpl.ServiceMedicamentoImpl;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,42 +29,42 @@ import org.springframework.web.server.ResponseStatusException;
  */
 @RestController
 @CrossOrigin(origins={"http://127.0.0.1:5502/"})
-@RequestMapping(value = "/producto")
+@RequestMapping(value = "/medicamento")
 
 
 
 
-public class ProductoController {
+public class MedicamentoController {
     
      @Autowired
-    private ServiceProductoImpl serviceProducto;
+    private ServiceMedicamentoImpl serviceMedicamento;
 
     @GetMapping(value = "")
-    public ResponseEntity<List<Producto>> ListaProducto() {
-        List<Producto> lista = serviceProducto.getListaProducto();
+    public ResponseEntity<List<Medicamento>> ListaMedicamento() {
+        List<Medicamento> lista = serviceMedicamento.getListaMedicamento();
         return ResponseEntity.ok(lista);
     }
 
     @PostMapping(value = "")
-    public ResponseEntity<Producto> CrearProducto(@Valid @RequestBody Producto inventario, BindingResult result) {
+    public ResponseEntity<Medicamento> CrearMedicamento(@Valid @RequestBody Medicamento cita, BindingResult result) {
         if (result.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, result.getFieldError()
                     .getDefaultMessage());
         }
-        Producto crear = serviceProducto.crearProducto(inventario);
+        Medicamento crear = serviceMedicamento.crearMedicamento(cita);
         return ResponseEntity.ok(crear);
     }
 
     @PutMapping(value = "")
-    public ResponseEntity<Producto> ActualizarProducto(@RequestBody Producto inventario) {
-        Producto actualizar = serviceProducto.ActualizarProducto(inventario);
+    public ResponseEntity<Medicamento> ActualizarMedicamento(@RequestBody Medicamento cita) {
+        Medicamento actualizar = serviceMedicamento.ActualizarMedicamento(cita);
         return ResponseEntity.ok(actualizar);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> EliminarProducto(@PathVariable("id") Long id) {
+    public ResponseEntity<String> EliminarMedicamento(@PathVariable("id") Long id) {
         if (id != null) {
-            if (serviceProducto.EliminarProducto(id)) {
+            if (serviceMedicamento.EliminarMedicamento(id)) {
                 return ResponseEntity.ok().body("Eliminado");
             }
         }

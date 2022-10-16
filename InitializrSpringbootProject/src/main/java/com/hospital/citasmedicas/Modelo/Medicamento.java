@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.tiendavirtual.mibarrio.Modelo;
+package com.hospital.citasmedicas.Modelo;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,31 +15,29 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name = "producto")
+@Table(name = "medicamento")
 
-public class Producto {
+public class Medicamento {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "pro_id_pk")
+    @Column(name = "medi_id_pk")
     private Long idpk;
     
-    @Column(name = "prod_descripcion")
-    @NotNull(message = "El campo descripcion no puede estar null")
-    private String descripcion;
+    @Column(name = "medi_name")
+    @NotNull(message = "Debe haber algo valido en este campo")
+    private String name;
     
-    /**
-     * utilizamos la librearia de validation el cual nos 
-     * permite valida si un campo viene null o vacio
-     * 
-     * */
-    @Column(name = "prod_costo")
-    @NotNull(message = "El campo costo no puede estar null")
+    
+    @Column(name = "medi_costo")
+    @NotNull(message = "El campo costo debe ser valido")
     private double costo;
 
-    public Producto() {
+    public Medicamento() {
     }
-
+    
+    
+    //a
     public Long getIdpk() {
         return idpk;
     }
@@ -48,12 +46,12 @@ public class Producto {
         this.idpk = idpk;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getName() {
+        return name;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getCosto() {
@@ -64,6 +62,5 @@ public class Producto {
         this.costo = costo;
     }
     
-    
-    
+
 }
